@@ -1,12 +1,21 @@
 from flask import Blueprint, request, jsonify, current_app
-from groq import Groq
 import os
 
 ai_bp = Blueprint('ai', __name__)
 
-# Initialize Groq client only if API key is available
+# Initialize GROQ client safely
+groq_client = None
 groq_api_key = os.getenv('GROQ_API_KEY')
-groq_client = Groq(api_key=groq_api_key) if groq_api_key and groq_api_key != 'your-groq-api-key-here' else None
+
+# Only import and initialize if we have a valid API key
+if groq_api_key and groq_api_key != 'your-groq-api-key-here':
+    try:
+        from groq import Groq
+        groq_client = Groq(api_key=groq_api_key)
+        print("✅ GROQ client initialized successfully")
+    except Exception as e:
+        print(f"⚠️ Error initializing GROQ client: {e}")
+        groq_client = None
 
 @ai_bp.route('/generate-user-stories', methods=['POST'])
 def generate_user_stories():
