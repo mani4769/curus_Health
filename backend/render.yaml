@@ -1,0 +1,16 @@
+# This file tells Render how to build and deploy your app
+
+# Specify the build command Render should run to create your backend app
+buildCommand: pip install -r requirements.txt
+
+# Specify the start command Render should use to start your app
+startCommand: python app.py
+
+# Specify any environment variables your app needs at runtime
+envVars:
+  - key: JWT_SECRET_KEY
+    value: your-secret-key-here-change-in-production
+  - key: DATABASE_NAME
+    value: project_management_db
+  # GROQ_API_KEY should be added through the Render dashboard
+  # MONGODB_URI will be set when you add a MongoDB database in Render
