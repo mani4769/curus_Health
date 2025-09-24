@@ -16,10 +16,9 @@ app.url_map.strict_slashes = False
 CORS(app, 
      origins=["*"], 
      supports_credentials=True,
-     allow_headers=["Content-Type", "Authorization"],
+     allow_headers=["Content-Type", "Authorization", "Accept"],
      methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-     automatic_options=True,
-     allow_headers=["Content-Type", "Authorization", "Accept"])
+     automatic_options=True)
 
 # JWT Configuration
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'fallback-secret-key')
