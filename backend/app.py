@@ -10,16 +10,9 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-# Disable strict slashes to fix 308 redirection issues
-app.url_map.strict_slashes = False
-# Update CORS to allow any origin and fix OPTIONS preflight
-CORS(app, 
-     origins=["*"], 
-     supports_credentials=True,
-     allow_headers=["Content-Type", "Authorization"],
-     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-     automatic_options=True,
-     allow_headers=["Content-Type", "Authorization", "Accept"])
+# Update CORS to allow requests from any origin during development
+# In production, specify your exact Vercel domain
+CORS(app, origins=["*"], supports_credentials=True)
 
 # JWT Configuration
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'fallback-secret-key')
