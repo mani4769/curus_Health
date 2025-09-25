@@ -59,8 +59,16 @@ const Users: React.FC = () => {
 
   const fetchUsers = async () => {
     try {
-          const response = await api.get('/api/users');
-      setUsers(response.data);
+      const response = await api.get('/api/users');
+      // Check if response.data is an array or if it has a users property
+      if (Array.isArray(response.data)) {
+        setUsers(response.data);
+      } else if (response.data && response.data.users) {
+        setUsers(response.data.users);
+      } else {
+        console.error('Invalid users data format:', response.data);
+        setUsers([]);
+      }
     } catch (error) {
       console.error('Error fetching users:', error);
     } finally {

@@ -66,7 +66,15 @@ const Tasks: React.FC = () => {
   const fetchTasks = async () => {
     try {
       const response = await api.get('/api/tasks');
-      setTasks(response.data);
+      // Check if response.data is an array or if it has a tasks property
+      if (Array.isArray(response.data)) {
+        setTasks(response.data);
+      } else if (response.data && response.data.tasks) {
+        setTasks(response.data.tasks);
+      } else {
+        console.error('Invalid tasks data format:', response.data);
+        setTasks([]);
+      }
     } catch (error) {
       console.error('Error fetching tasks:', error);
     } finally {
@@ -78,7 +86,15 @@ const Tasks: React.FC = () => {
   const fetchProjects = async () => {
     try {
       const response = await api.get('/api/projects');
-      setProjects(response.data);
+      // Check if response.data is an array or if it has a projects property
+      if (Array.isArray(response.data)) {
+        setProjects(response.data);
+      } else if (response.data && response.data.projects) {
+        setProjects(response.data.projects);
+      } else {
+        console.error('Invalid projects data format:', response.data);
+        setProjects([]);
+      }
     } catch (error) {
       console.error('Error fetching projects:', error);
     }
@@ -88,7 +104,15 @@ const Tasks: React.FC = () => {
   const fetchUsers = async () => {
     try {
       const response = await api.get('/api/users');
-      setUsers(response.data);
+      // Check if response.data is an array or if it has a users property
+      if (Array.isArray(response.data)) {
+        setUsers(response.data);
+      } else if (response.data && response.data.users) {
+        setUsers(response.data.users);
+      } else {
+        console.error('Invalid users data format:', response.data);
+        setUsers([]);
+      }
     } catch (error) {
       console.error('Error fetching users:', error);
     }

@@ -54,9 +54,17 @@ const Projects: React.FC = () => {
 
   const fetchProjects = async () => {
     try {
-  const response = await api.get('/api/projects');
+      const response = await api.get('/api/projects');
       console.log('Projects API response:', response.data);
-      setProjects(response.data);
+      // Check if response.data is an array or if it has a projects property
+      if (Array.isArray(response.data)) {
+        setProjects(response.data);
+      } else if (response.data && response.data.projects) {
+        setProjects(response.data.projects);
+      } else {
+        console.error('Invalid projects data format:', response.data);
+        setProjects([]);
+      }
     } catch (error) {
       console.error('Error fetching projects:', error);
     } finally {
@@ -66,8 +74,16 @@ const Projects: React.FC = () => {
 
   const fetchUsers = async () => {
     try {
-  const response = await api.get('/api/users');
-      setUsers(response.data);
+      const response = await api.get('/api/users');
+      // Check if response.data is an array or if it has a users property
+      if (Array.isArray(response.data)) {
+        setUsers(response.data);
+      } else if (response.data && response.data.users) {
+        setUsers(response.data.users);
+      } else {
+        console.error('Invalid users data format:', response.data);
+        setUsers([]);
+      }
     } catch (error) {
       console.error('Error fetching users:', error);
     }
